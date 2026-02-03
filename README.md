@@ -5,7 +5,7 @@ Una aplicación CLI del tiempo con CI/CD completo usando GitHub Actions.
 ## 🚀 Estado del proyecto
 
 ![CI Tests](https://github.com/EvanSilva/weather-app-ci/workflows/CI%20-%20Tests/badge.svg)
-![Release](https://github.com/EvanSilva/weather-app-ci/workflows/Release%20&%20Build/badge.svg)
+![Release](https://github.com/EvanSilva/weather-app-ci/workflows/Release%20%26%20Build/badge.svg)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/EvanSilva/weather-app-ci)
 ![GitHub](https://img.shields.io/github/license/EvanSilva/weather-app-ci)
 
