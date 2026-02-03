@@ -1,0 +1,123 @@
+name: Release & Build
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+  build:
+    name: Build Multi-platform Executables
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build executables
+        run: npm run build
+
+      - name: Set executable permissions
+        run: |
+          chmod +x dist/weather-linux
+          chmod +x dist/weather-macos-x64
+          chmod +x dist/weather-macos-arm64
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: executables
+          path: dist/*
+          retention-days: 7
+
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: executables
+          path: dist
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/weather-linux
+            dist/weather-macos-x64
+            dist/weather-macos-arm64
+            dist/weather-win.exe
+          body: |
+            ## Weather App Release ${{ github.ref_name }}
+
+            ### Downloads
+
+            **Linux (x64):**
+            - `weather-linux`
+
+            **macOS:**
+            - `weather-macos-x64` - Intel Macs
+            - `weather-macos-arm64` - Apple Silicon (M1/M2/M3)
+
+            **Windows (x64):**
+            - `weather-win.exe`
+
+            ### Installation
+
+            **Linux/macOS:**
+            ```bash
+            # Dar permisos de ejecución
+            chmod +x weather-linux  # o weather-macos-x64 / weather-macos-arm64
+
+            # Ejecutar
+            ./weather-linux Madrid
+            ```
+
+            **Windows:**
+            ```cmd
+            weather-win.exe Madrid
+            ```
+
+            ### Notes
+            - macOS users with Apple Silicon (M1/M2/M3): Use `weather-macos-arm64`
+            - macOS users with Intel processors: Use `weather-macos-x64`
+            - Both versions will work on Apple Silicon through Rosetta, but ARM native is faster
