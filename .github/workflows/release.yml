@@ -52,9 +52,7 @@ jobs:
 
       - name: Set executable permissions
         run: |
-          chmod +x dist/weather-linux
-          chmod +x dist/weather-macos-x64
-          chmod +x dist/weather-macos-arm64
+          chmod +x dist/*
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -82,10 +80,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/weather-linux
-            dist/weather-macos-x64
-            dist/weather-macos-arm64
-            dist/weather-win.exe
+            dist/*
           body: |
             ## Weather App Release ${{ github.ref_name }}
 
