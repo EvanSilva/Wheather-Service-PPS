@@ -7,8 +7,8 @@
     "start": "node weather.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "pkg .",
-    "lint": "eslint . --ext .js"
+    "lint": "eslint . --ext .js",
+    "build": "pkg weather.js --targets node20-linux-x64,node20-macos-x64,node20-win-x64 --out-path dist --output weather"
   },
   "bin": "weather.js",
   "engines": {
