@@ -6,6 +6,7 @@ Una aplicación CLI del tiempo con CI/CD completo usando GitHub Actions.
 
 [![CI - Tests](https://github.com/EvanSilva/Wheather-Service-PPS/actions/workflows/ci.yml/badge.svg)](https://github.com/EvanSilva/Wheather-Service-PPS/actions/workflows/ci.yml)
 [![Release & Build](https://github.com/EvanSilva/Wheather-Service-PPS/actions/workflows/release.yml/badge.svg)](https://github.com/EvanSilva/Wheather-Service-PPS/actions/workflows/release.yml)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/EvanSilva/weather-app-ci)
 
 ## 📦 Instalación
 
